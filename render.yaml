@@ -2,7 +2,7 @@ services:
   - type: web
     name: heatwise-ai-fast
     runtime: docker
-    plan: starter
+    plan: free
     healthCheckPath: /_stcore/health
     autoDeployTrigger: commit
     envVars:
