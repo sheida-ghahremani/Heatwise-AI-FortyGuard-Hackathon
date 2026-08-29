@@ -336,9 +336,9 @@ with st.sidebar:
             LIVE_GRAPH = area_config["graph"]
         pass
     if data_source == "Live College Station data":
-        use_latest_hour = st.toggle("Use latest complete hour", value=True)
+        use_latest_hour = st.toggle("Use current hour", value=True)
         now_hour = current_hour()
-        latest_complete_hour = now_hour - timedelta(hours=1)
+        latest_complete_hour = now_hour
         selected_time = st.time_input(
             "Temperature hour (College Station)",
             value=latest_complete_hour.time(),
