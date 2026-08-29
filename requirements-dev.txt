@@ -1,0 +1,7 @@
+-r requirements.txt
+jupyterlab>=4.0.0
+ipywidgets>=8.1.0
+matplotlib>=3.8.0
+reportlab>=4.0.0
+pytest>=8.0.0
+laspy[lazrs]>=2.7.0

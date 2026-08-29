@@ -1,0 +1,16 @@
+requests>=2.31.0
+python-dotenv>=1.0.0
+pandas>=2.1.0
+folium>=0.15.0
+streamlit>=1.36.0
+streamlit-js-eval>=1.0.0
+streamlit-searchbox>=0.1.24
+streamlit-folium>=0.22.0
+networkx>=3.2.0
+geopandas>=1.0.0
+rasterio>=1.4.0
+osmnx>=2.0.0
+pillow>=10.0.0
+shapely>=2.0.0
+scipy>=1.10.0
+pythermalcomfort>=3.6,<4

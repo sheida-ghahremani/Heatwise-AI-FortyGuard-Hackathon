@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: heatwise-ai-fast
+    runtime: docker
+    plan: starter
+    healthCheckPath: /_stcore/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: FORTYGUARD_API_KEY
+        sync: false
+      - key: FORTYGUARD_BASE_URL
+        value: https://api.fortyguard.com
+      - key: MAPBOX_ACCESS_TOKEN
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
