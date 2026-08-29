@@ -44,9 +44,16 @@ st.markdown(
     """
     <style>
     .block-container {padding-top: 1.6rem; padding-bottom: 2rem;}
-    [data-testid="stMetric"] {background:#ffffff; border:1px solid #e5e7eb; padding:14px; border-radius:14px;}
-    [data-testid="stMetricLabel"] p {font-size:.78rem !important; line-height:1.15 !important; white-space:normal !important;}
-    [data-testid="stMetricValue"] {font-size:1.55rem !important; line-height:1.15 !important;}
+    [data-testid="stMetric"] {background:#ffffff; border:1px solid #e5e7eb; padding:10px; border-radius:14px;}
+    [data-testid="stMetricLabel"] p {font-size:.72rem !important; line-height:1.15 !important; white-space:normal !important;}
+    [data-testid="stMetricValue"], [data-testid="stMetricValue"] > div {
+        font-size:1.12rem !important;
+        line-height:1.2 !important;
+        white-space:normal !important;
+        overflow:visible !important;
+        text-overflow:clip !important;
+        word-break:normal !important;
+    }
     .hero {padding:22px 26px;border-radius:18px;background:linear-gradient(120deg,#083344,#0f766e);color:white;margin:2px 0 16px;text-align:center}
     .hero h1 {margin:0;font-size:2.2rem}.hero p {margin:7px 0 0;color:#ccfbf1}
     .notice {background:#fffbeb;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:8px;margin-bottom:12px}
@@ -249,7 +256,7 @@ with st.sidebar:
                 default_searchterm=area_config["origin_default"],
                 default_options=default_location_option(area_config["origin_default"], area_config["origin_coord"]),
                 debounce=350,
-                edit_after_submit="current",
+                edit_after_submit="option",
                 submit_function=use_origin_search,
                 key=f"mapbox_origin_search_{area_config['key']}",
             )
@@ -268,7 +275,7 @@ with st.sidebar:
                 default_searchterm=area_config["destination_default"],
                 default_options=default_location_option(area_config["destination_default"], area_config["destination_coord"]),
                 debounce=350,
-                edit_after_submit="current",
+                edit_after_submit="option",
                 submit_function=use_destination_search,
                 key=f"mapbox_destination_search_{area_config['key']}",
             )
