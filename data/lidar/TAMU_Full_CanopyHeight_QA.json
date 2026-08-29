@@ -1,0 +1,53 @@
+{
+  "laz_files": [
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU515870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU515885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU515900_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU515915_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530900_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530915_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545900_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545915_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU560870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU560885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU560900_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU560915_LAS_2019.laz"
+  ],
+  "study_bounds_wgs84": [
+    -96.375,
+    30.592,
+    -96.326,
+    30.636
+  ],
+  "study_bounds_epsg6343": [
+    751587.8472529376,
+    3387322.3609344494,
+    756401.8472529376,
+    3392312.3609344494
+  ],
+  "raster_shape": [
+    2495,
+    2407
+  ],
+  "resolution_m": 2.0,
+  "points_inside_aoi": 103524297,
+  "classification_counts_inside_aoi": {
+    "1": 50584476,
+    "2": 52891440,
+    "7": 1230,
+    "9": 2641,
+    "10": 1409,
+    "17": 43101
+  },
+  "ground_cell_coverage_fraction": 0.8981382790508312,
+  "surface_cell_coverage_fraction": 0.9969975680484359,
+  "canopy_mask_fraction": 0.9548398000820919,
+  "canopy_height_valid_cells": 2297869,
+  "canopy_height_median_m": 7.332222222222228,
+  "canopy_height_p95_m": 16.346666666666657,
+  "method_note": "The source lacks LAS vegetation classes 3-5. DSM uses maximum class 1/2 elevation; DTM uses mean class-2 ground elevation; CHM is masked by the College Station UTC polygon and heights below 1 m are excluded."
+}

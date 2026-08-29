@@ -1,0 +1,9 @@
+{
+  "building_footprints_in_aoi": 50,
+  "lidar_derived_heights": 47,
+  "fallback_heights": 3,
+  "median_building_height_m": 5.886250019073486,
+  "p95_building_height_m": 10.6911159992218,
+  "maximum_building_height_m": 13.456250190734863,
+  "note": "Source building_* attributes were all zero; heights were derived from LiDAR within each footprint."
+}

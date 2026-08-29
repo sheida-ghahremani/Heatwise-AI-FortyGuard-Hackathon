@@ -1,0 +1,43 @@
+{
+  "laz_files": [
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU530900_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545870_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545885_LAS_2019.laz",
+    "USGS_LPC_TX_RedRiver_3Area_B2_2018_14RQU545900_LAS_2019.laz"
+  ],
+  "study_bounds_wgs84": [
+    -96.352,
+    30.602,
+    -96.332,
+    30.626
+  ],
+  "study_bounds_epsg6343": [
+    753819.1199441464,
+    3388482.818764033,
+    755800.1199441464,
+    3391189.818764033
+  ],
+  "raster_shape": [
+    2707,
+    1981
+  ],
+  "resolution_m": 1.0,
+  "points_inside_aoi": 21955794,
+  "classification_counts_inside_aoi": {
+    "1": 9882704,
+    "2": 12058754,
+    "7": 710,
+    "9": 58,
+    "10": 61,
+    "17": 13507
+  },
+  "ground_cell_coverage_fraction": 0.8140662857918605,
+  "surface_cell_coverage_fraction": 0.9973825968048511,
+  "canopy_mask_fraction": 0.0706976714696525,
+  "canopy_height_valid_cells": 323560,
+  "canopy_height_median_m": 8.129999999999981,
+  "canopy_height_p95_m": 13.079999999999984,
+  "method_note": "The source lacks LAS vegetation classes 3-5. DSM uses maximum class 1/2 elevation; DTM uses mean class-2 ground elevation; CHM is masked by the College Station UTC polygon and heights below 1 m are excluded."
+}
