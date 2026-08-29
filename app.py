@@ -6,30 +6,36 @@ import os
 from datetime import datetime, timedelta
 import time
 
-import pandas as pd
 import requests
 import streamlit as st
-from streamlit_folium import st_folium
 from streamlit_js_eval import get_geolocation
 from streamlit_searchbox import st_searchbox
 from dotenv import load_dotenv
 
-from heatwise.assistant import answer_question
-from heatwise.albedo import apply_osm_surface_albedo
-from heatwise.demo import DemoWeather, LANDMARKS, build_demo_graph, nearest_node
-from heatwise.data_integration import assign_heatmap_to_graph, load_fortyguard_heatmap
 from heatwise.geocoding import GeocodingResult, search_college_station
-from heatwise.graph_io import load_routing_graph, routing_graph_exists
 from heatwise.live_data import COLLEGE_STATION_TZ, current_hour, fetch_hourly_snapshot, latest_cached_snapshot
-from heatwise.map_view import MAPBOX_STYLES, ROUTE_COLORS, build_map
 from heatwise.models import Activity, AgeGroup, Clothing, UserProfile
-from heatwise.routing import calculate_routes, prepare_graph, route_temperature_profile
-from heatwise.shade import apply_dynamic_shade, solar_position
-from heatwise.horizon import apply_horizon_profile
-from heatwise.svf import apply_lidar_sky_view_factor
 from heatwise.weather import fetch_hourly_weather
-from heatwise.wind import apply_local_pedestrian_wind, logarithmic_wind_speed
-from heatwise.view3d import build_3d_deck
+
+
+MAPBOX_STYLES = {
+    "Streets": "streets-v12",
+    "Outdoors": "outdoors-v12",
+    "Satellite": "satellite-streets-v12",
+}
+LANDMARKS = {
+    "Kyle Field": (30.6102, -96.3404),
+    "Evans Library": (30.6169, -96.3398),
+    "MSC": (30.6123, -96.3413),
+    "Zachry Engineering": (30.6210, -96.3408),
+    "Reed Arena": (30.6055, -96.3466),
+    "Bonfire Memorial": (30.6223, -96.3370),
+}
+
+
+def routing_graph_exists(path: str | Path) -> bool:
+    graph_path = Path(path)
+    return graph_path.exists() or graph_path.with_suffix(".pickle").exists()
 
 
 load_dotenv(".env")
@@ -100,11 +106,15 @@ CITY_BOUNDARY = Path("data/boundaries/CollegeStation.geojson")
 
 @st.cache_resource(max_entries=1)
 def load_live_graph(path: str):
+    from heatwise.graph_io import load_routing_graph
     return load_routing_graph(path)
 
 
 @st.cache_resource(max_entries=2, show_spinner=False)
 def load_snapshot_graph(graph_path: str, heatmap_path: str, canopy_path: str, building_path: str):
+    from heatwise.data_integration import assign_heatmap_to_graph, load_fortyguard_heatmap
+    from heatwise.graph_io import load_routing_graph
+    from heatwise.svf import apply_lidar_sky_view_factor
     started = time.perf_counter()
     print(f"[snapshot] start graph={Path(graph_path).name}", flush=True)
     graph = load_routing_graph(graph_path)
@@ -412,6 +422,24 @@ with st.sidebar:
                 f"unsynchronized manual values. Please retry. ({type(weather_error).__name__})"
             )
             st.stop()
+
+# Heavy geospatial and thermal libraries load only after the user explicitly
+# requests a calculation. Location search and profile controls therefore stay
+# responsive during judging, even after a free-tier cold start.
+import pandas as pd
+from streamlit_folium import st_folium
+from heatwise.assistant import answer_question
+from heatwise.albedo import apply_osm_surface_albedo
+from heatwise.demo import DemoWeather, build_demo_graph, nearest_node
+from heatwise.data_integration import assign_heatmap_to_graph, load_fortyguard_heatmap
+from heatwise.graph_io import load_routing_graph
+from heatwise.horizon import apply_horizon_profile
+from heatwise.map_view import ROUTE_COLORS, build_map
+from heatwise.routing import calculate_routes, prepare_graph, route_temperature_profile
+from heatwise.shade import apply_dynamic_shade, solar_position
+from heatwise.svf import apply_lidar_sky_view_factor
+from heatwise.view3d import build_3d_deck
+from heatwise.wind import apply_local_pedestrian_wind, logarithmic_wind_speed
 
 if origin_name == destination_name:
     st.warning("Please choose different origin and destination points.")
