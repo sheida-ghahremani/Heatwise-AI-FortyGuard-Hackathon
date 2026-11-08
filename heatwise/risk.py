@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from functools import lru_cache
 
 
 UTCI_NO_HEAT_STRESS_C = 26.0
@@ -14,6 +15,7 @@ def apparent_temperature_c(temp_c: float, humidity_pct: float, wind_mps: float) 
     return temp_c + 0.33 * vapor_pressure - 0.70 * wind - 4.0
 
 
+@lru_cache(maxsize=32768)
 def mean_radiant_temperature_c(
     *, air_temperature_c: float, direct_normal_radiation_wm2: float,
     diffuse_radiation_wm2: float = 0.0,
@@ -72,6 +74,7 @@ def mean_radiant_temperature_c(
     return float(baseline_c + result.delta_mrt + diffuse_delta_mrt)
 
 
+@lru_cache(maxsize=32768)
 def utci_c(*, temp_c: float, mean_radiant_temp_c: float, humidity_pct: float, wind_10m_mps: float) -> float:
     """Calculate UTCI using its standard 10 m wind convention."""
     from pythermalcomfort.models import utci

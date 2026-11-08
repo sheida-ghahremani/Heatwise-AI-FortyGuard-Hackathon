@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+from functools import lru_cache
 
 import networkx as nx
 import numpy as np
@@ -29,6 +30,7 @@ class RouteResult:
     pet_exposure_load: float
     utci_exposure_load: float
     risk: str
+    routing_weight: str = "duration_min"
 
 
 def pet_stress_category(pet_c: float) -> str:
@@ -50,6 +52,38 @@ def _bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
     return (math.degrees(math.atan2(x, y)) + 360.0) % 360.0
 
 
+PET_NO_HEAT_STRESS_C = 29.0
+BALANCED_PET_MINUTES_PER_C_MIN = 0.04
+
+
+@lru_cache(maxsize=65536)
+def _pet_cached(temp: float, mrt: float, wind: float, rh: float,
+                met: float, clo: float, age: int) -> float:
+    from pythermalcomfort.models import pet_steady
+    value = float(np.asarray(pet_steady(
+        tdb=temp, tr=mrt, v=max(0.1, wind), rh=rh, met=met, clo=clo,
+        position="standing", age=age,
+    ).pet).reshape(-1)[0])
+    if not math.isfinite(value):
+        raise ValueError("PET model returned a non-finite value; route was not calculated")
+    return value
+
+
+def segment_pet_c(temp: float, mrt: float, wind: float, rh: float,
+                  profile: UserProfile, *, exact: bool = False) -> float:
+    """MEMI PET for the selected profile, with documented environmental bins.
+
+    Cache bins: 0.1 C air temperature, 0.25 C MRT and 0.05 m/s wind.
+    Age, metabolism and clothing are never rounded or substituted.
+    Exact mode supports checking approximation error against unbinned solves.
+    """
+    if not exact:
+        temp, mrt, wind = round(temp, 1), round(mrt * 4) / 4, round(wind * 20) / 20
+    return _pet_cached(float(temp), float(mrt), float(wind), float(rh),
+                       profile.metabolic_rate_met, profile.summer_clothing_clo,
+                       profile.representative_age)
+
+
 def prepare_graph(
     graph: nx.Graph,
     profile: UserProfile,
@@ -63,8 +97,9 @@ def prepare_graph(
     solar_elevation_deg: float = 45.0,
     solar_azimuth_deg: float = 180.0,
 ) -> nx.Graph:
-    # All upstream enrichment is request-local, so mutate in place to keep the
-    # production memory footprint below the Render free-tier limit.
+    # Profile weights belong to this request, not the shared environmental cache.
+    graph = graph.copy()
+    graph.graph["heatwise_profile"] = profile
     speed_mpm = profile.speed_kph * 1000 / 60
     edge_records = list(graph.edges(data=True))
     for u, v, data in edge_records:
@@ -100,11 +135,11 @@ def prepare_graph(
         data["mean_radiant_temperature_c"] = mrt
         data["utci_c"] = utci_value
         data["utci_heat_cost"] = max(0.0, utci_value - UTCI_NO_HEAT_STRESS_C) * duration
-        # UTCI supplies the network-wide thermal weight. PET is substantially
-        # more expensive, so it is evaluated scientifically only on the three
-        # candidate routes in _summarize rather than on every campus edge.
-        data["heat_cost"] = data["utci_heat_cost"]
-        data["balanced_cost"] = duration + 0.04 * data["heat_cost"]
+        pet = segment_pet_c(temp, mrt, float(data.get("wind_mps", wind_mps)), humidity_pct, profile)
+        data["pet_c"] = pet
+        data["pet_heat_cost"] = max(0.0, pet - PET_NO_HEAT_STRESS_C) * duration
+        data["heat_cost"] = data["pet_heat_cost"]
+        data["balanced_cost"] = duration + BALANCED_PET_MINUTES_PER_C_MIN * data["pet_heat_cost"]
         data["pet_rh_pct"] = humidity_pct
         data["pet_met"] = profile.metabolic_rate_met
         data["pet_clo"] = profile.summer_clothing_clo
@@ -134,22 +169,7 @@ def _summarize(
         average_wind = sum(float(e.get("wind_mps", 0.0)) * float(e["length"]) for e in edges) / distance
         average_mrt = sum(float(e["mean_radiant_temperature_c"]) * float(e["duration_min"]) for e in edges) / duration
         average_utci = sum(float(e["utci_c"]) * float(e["duration_min"]) for e in edges) / duration
-        # Report route-representative PET from duration/distance-weighted
-        # environmental conditions. This retains the scientific PET model and
-        # personalization while avoiding hundreds of iterative PET solves per
-        # user interaction on small public instances.
-        pet_profile = profile or UserProfile()
-        from pythermalcomfort.models import pet_steady
-        average_pet = float(np.asarray(pet_steady(
-            tdb=temp,
-            tr=average_mrt,
-            v=max(0.1, average_wind),
-            rh=float(edges[0]["pet_rh_pct"]),
-            met=pet_profile.metabolic_rate_met,
-            clo=pet_profile.summer_clothing_clo,
-            position="standing",
-            age=pet_profile.representative_age,
-        ).pet, dtype=float).reshape(-1)[0])
+        average_pet = sum(float(e["pet_c"]) * float(e["duration_min"]) for e in edges) / duration
     else:
         temp, shade, average_wind, average_mrt, average_utci, average_pet = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
     return RouteResult(
@@ -167,9 +187,10 @@ def _summarize(
         average_utci_c=average_utci,
         average_pet_c=average_pet,
         pet_category=pet_stress_category(average_pet),
-        pet_exposure_load=max(0.0, average_pet - 29.0) * duration,
+        pet_exposure_load=sum(float(e["pet_heat_cost"]) for e in edges),
         utci_exposure_load=utci_load,
         risk=utci_stress_category(average_utci),
+        routing_weight=weight,
     )
 
 
@@ -201,7 +222,7 @@ def route_temperature_profile(graph: nx.Graph, route: RouteResult) -> list[dict[
     profile: list[dict[str, float]] = []
     cumulative_m = 0.0
     for a, b in zip(route.nodes, route.nodes[1:]):
-        edge = _edge_for_weight(graph, a, b, "duration_min")
+        edge = _edge_for_weight(graph, a, b, route.routing_weight)
         length = float(edge["length"])
         profile.append(
             {
