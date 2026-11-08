@@ -569,8 +569,8 @@ origin = nearest_node(graph, origin_coordinate)
 destination = nearest_node(graph, destination_coordinate)
 routes = calculate_routes(graph, origin, destination, profile)
 
-tab_map, tab_3d, tab_compare, tab_chat, tab_method = st.tabs(
-    ["Route map", "3D Urban Heat", "Compare routes", "Ask HeatWise AI", "How it works"]
+tab_map, tab_3d, tab_compare, tab_relief, tab_planner, tab_chat, tab_method = st.tabs(
+    ["Route map", "3D Urban Heat", "Compare routes", "Cooling & parks", "Planner dashboard", "Ask HeatWise AI", "How it works"]
 )
 with tab_map:
     selected_name = st.radio("Show route", [r.name for r in routes], horizontal=True)
@@ -700,7 +700,8 @@ with tab_compare:
         c6.metric("UTCI category", route.risk)
         c7.metric("Personalized PET equivalent", f"{route.average_pet_c:.1f} °C")
 
-with tab_chat:
+@st.fragment
+def render_route_assistant():
     st.subheader("Ask HeatWise AI")
     if os.getenv("GROQ_API_KEY"):
         st.info("Online AI configured: Groq. Each reply reports the model and mode actually used.")
@@ -741,8 +742,13 @@ with tab_chat:
                 st.caption(f"Mode: {assistant_mode}")
         st.session_state.heatwise_messages.append({"role": "assistant", "content": reply, "mode": assistant_mode})
 
+
+with tab_chat:
+    render_route_assistant()
+
 with tab_method:
     st.subheader("Standards-based outdoor thermal stress")
+    st.write("Cooling & parks adds source-attributed facilities and waypoint route comparisons. Planner dashboard aggregates modeled segments into 100/200/400 m cells, screens heat/shade/access gaps, exports GIS layers and evaluates a shade-only sensitivity. Facility access and opening hours require confirmation. These tools do not assume indoor recovery or a cooling benefit for every park.")
     st.write(
         "Each network segment uses ASHRAE 55 SolarCal to estimate mean radiant temperature and "
         "UTCI to combine air temperature, mean radiant temperature, relative humidity, "
@@ -771,3 +777,26 @@ with tab_method:
         "(historical reanalysis for archive dates) + time-dependent LiDAR tree/building shade + "
         "OSM walking/cycling network."
     )
+
+
+# Each new tool reruns independently of the full-campus thermal calculation.
+from heatwise.relief_ui import render_relief_tab, render_planner_tab
+import hashlib
+environment_revision = hashlib.sha256(repr((
+    snapshot.fetched_at.isoformat() if data_source == "FortyGuard College Station data" else temperature,
+    (humidity, wind, radiation, direct_normal_radiation, diffuse_radiation, cloud_cover),
+    origin_coordinate, destination_coordinate)).encode()).hexdigest()[:16]
+analysis_context = {"spatial_sources": "OpenStreetMap contributors; project LiDAR", "catalog_reviewed_on": "2026-11-08", "environmental_revision": environment_revision, "study_area": study_area, "environmental_time": requested_at.isoformat(),
+                    "age_group": age, "activity": activity, "clothing": clothing,
+                    "data_source": data_source, "origin": origin_name, "destination": destination_name}
+analysis_environment = {"humidity_pct": weather.humidity_pct, "wind_mps": weather.wind_mps,
+                        "radiation_wm2": float(radiation),
+                        "direct_normal_radiation_wm2": float(direct_normal_radiation),
+                        "diffuse_radiation_wm2": float(diffuse_radiation),
+                        "cloud_cover_pct": float(cloud_cover),
+                        "solar_elevation_deg": float(shade_meta["solar_elevation_deg"]),
+                        "solar_azimuth_deg": float(shade_meta["solar_azimuth_deg"])}
+with tab_relief:
+    render_relief_tab(graph, routes, profile, area_config["key"], origin, destination, analysis_context)
+with tab_planner:
+    render_planner_tab(graph, profile, area_config["key"], analysis_context, analysis_environment)
