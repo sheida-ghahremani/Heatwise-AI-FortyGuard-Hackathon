@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import json
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time as datetime_time
 import time
 
 import requests
@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from heatwise.geocoding import GeocodingResult, search_college_station
 from heatwise.live_data import COLLEGE_STATION_TZ, current_hour, fetch_hourly_snapshot, latest_cached_snapshot
 from heatwise.models import Activity, AgeGroup, Clothing, UserProfile
-from heatwise.weather import fetch_hourly_weather
+from poster_weather import fetch_hourly_weather
 
 
 MAPBOX_STYLES = {
@@ -180,9 +180,9 @@ live_available = all(config["graph"].exists() and config["bike_graph"].exists() 
 
 with st.sidebar:
     st.header("Plan your route")
-    source_options = ["Live College Station data", "Prototype scenario"] if live_available else ["Prototype scenario"]
+    source_options = ["FortyGuard College Station data", "Prototype scenario"] if live_available else ["Prototype scenario"]
     data_source = st.selectbox("Data source", source_options)
-    study_area = st.selectbox("Study area", list(AREA_CONFIG)) if data_source == "Live College Station data" else "TAMU Campus"
+    study_area = st.selectbox("Study area", list(AREA_CONFIG)) if data_source == "FortyGuard College Station data" else "TAMU Campus"
     area_config = AREA_CONFIG[study_area]
     if st.session_state.get("active_study_area") != study_area:
         for key in (
@@ -202,7 +202,7 @@ with st.sidebar:
         st.caption("Basemap: Mapbox · Routing engine: OSMnx")
     else:
         map_style = "Streets"
-    if data_source == "Live College Station data" and mapbox_token:
+    if data_source == "FortyGuard College Station data" and mapbox_token:
         st.subheader("Search locations")
         st.caption("Start typing an address, campus building, or place and choose a Mapbox suggestion.")
 
@@ -332,7 +332,7 @@ with st.sidebar:
         index=1,
         help="Clothing insulation is entered directly into the PET calculation. Choose the option closest to what you are wearing.",
     )
-    if data_source == "Live College Station data" and activity == Activity.CYCLING.value:
+    if data_source == "FortyGuard College Station data" and activity == Activity.CYCLING.value:
         LIVE_GRAPH = area_config.get("prepared_bike_graph", area_config["bike_graph"])
         if not routing_graph_exists(LIVE_GRAPH):
             LIVE_GRAPH = area_config["bike_graph"]
@@ -342,21 +342,20 @@ with st.sidebar:
         if not routing_graph_exists(LIVE_GRAPH):
             LIVE_GRAPH = area_config["graph"]
         pass
-    if data_source == "Live College Station data":
-        use_latest_hour = st.toggle("Use current hour", value=True)
-        now_hour = current_hour()
-        latest_complete_hour = now_hour
+    if data_source == "FortyGuard College Station data":
+        selected_date = st.date_input(
+            "Temperature date (College Station)",
+            value=date(2026, 8, 1),
+            min_value=date(2019, 1, 1),
+            max_value=current_hour().date(),
+        )
         selected_time = st.time_input(
             "Temperature hour (College Station)",
-            value=latest_complete_hour.time(),
+            value=datetime_time(14, 0),
             step=3600,
-            disabled=use_latest_hour,
         )
-        requested_at = (
-            latest_complete_hour
-            if use_latest_hour
-            else datetime.combine(now_hour.date(), selected_time, tzinfo=COLLEGE_STATION_TZ)
-        )
+        requested_at = datetime.combine(selected_date, selected_time, tzinfo=COLLEGE_STATION_TZ)
+        st.caption("Historical case study · Aug 1, 2026 at 2 PM. FortyGuard data can lag by 1–2 weeks; all environmental inputs use the selected date and hour.")
     pending_request = {
         "data_source": data_source,
         "study_area": study_area,
@@ -368,7 +367,7 @@ with st.sidebar:
         "age": age,
         "activity": activity,
         "clothing": clothing,
-        "requested_at": requested_at.isoformat() if data_source == "Live College Station data" else None,
+        "requested_at": requested_at.isoformat() if data_source == "FortyGuard College Station data" else None,
     }
     calculate_clicked = st.button(
         "Calculate routes",
@@ -453,7 +452,7 @@ if origin_name == destination_name:
     st.stop()
 
 profile = UserProfile(AgeGroup(age), Activity(activity), Clothing(clothing))
-if data_source == "Live College Station data":
+if data_source == "FortyGuard College Station data":
     try:
         with st.spinner("Loading the current FortyGuard temperature layer..."):
             snapshot = fetch_hourly_snapshot(requested_at, force=force_refresh, area=area_config["key"])
