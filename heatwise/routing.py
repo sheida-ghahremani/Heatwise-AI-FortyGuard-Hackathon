@@ -104,10 +104,14 @@ def prepare_graph(
     edge_records = list(graph.edges(data=True))
     for u, v, data in edge_records:
         duration = float(data.get("length", 0.0)) / speed_mpm
-        heading = _bearing_deg(
-            float(graph.nodes[u]["x"]), float(graph.nodes[u]["y"]),
-            float(graph.nodes[v]["x"]), float(graph.nodes[v]["y"]),
-        )
+        heading = data.get("thermal_heading_deg")
+        if heading is None:
+            heading = _bearing_deg(
+                float(graph.nodes[u]["x"]), float(graph.nodes[u]["y"]),
+                float(graph.nodes[v]["x"]), float(graph.nodes[v]["y"]),
+            )
+        heading = float(heading)
+        data["thermal_heading_deg"] = heading
         angle = abs((solar_azimuth_deg - heading + 180.0) % 360.0 - 180.0)
         sharp = min(angle, 180.0)
         temp = float(data.get("temperature_c", 35.0))
@@ -196,7 +200,7 @@ def _summarize(
 
 def calculate_routes(
     graph: nx.Graph, origin: int, destination: int,
-    profile: UserProfile | None = None,
+    profile: UserProfile | None = None, *, via: int | None = None,
 ) -> list[RouteResult]:
     specs = [
         ("Fastest", "duration_min"),
@@ -206,7 +210,12 @@ def calculate_routes(
     results: list[RouteResult] = []
     seen: set[tuple[int, ...]] = set()
     for name, weight in specs:
-        nodes = nx.shortest_path(graph, origin, destination, weight=weight)
+        if via is None:
+            nodes = nx.shortest_path(graph, origin, destination, weight=weight)
+        else:
+            first = nx.shortest_path(graph, origin, via, weight=weight)
+            second = nx.shortest_path(graph, via, destination, weight=weight)
+            nodes = first + second[1:]
         key = tuple(nodes)
         if key not in seen:
             results.append(_summarize(graph, nodes, name, weight, profile))

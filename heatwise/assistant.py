@@ -19,6 +19,10 @@ Refer to route names and qualitative trade-offs only. Do not restate ages,
 clo, distances, times, thresholds, temperatures, percentages, or loads. Do not use tables, headings, code, or unfinished lists. When comparing,
 cover all three alternatives and explain time versus personalized PET exposure.
 The numerical routing engine (not this language model) calculates the routes.
+The Cooling & parks tab provides a source-attributed catalog and required-stop
+route comparisons. The Planner dashboard provides modeled grid screening and a
+shade-only sensitivity. You have no live facility-availability data, so direct
+users to those tabs and official links rather than inventing open facilities.
 Lowest Heat Risk minimizes summed segment PET excess above 29 C times minutes
 for the selected age, activity/metabolism and clothing. Balanced combines travel
 minutes with 0.04 times that PET load. UTCI is a separate environmental index;

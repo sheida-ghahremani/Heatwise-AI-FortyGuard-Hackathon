@@ -1,0 +1,1404 @@
+{
+  "version": 2,
+  "reviewed_on": "2026-11-08",
+  "license": "Park geometry and building coordinates: © OpenStreetMap contributors, ODbL. Facility information: cited public agencies.",
+  "items": [
+    {
+      "id": "osm-way-155052775",
+      "name": "Betsy and Pete Foster '63 Courtyard and Garden",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.61210675,
+      "longitude": -96.34192695961316,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3418916,
+              30.61229
+            ],
+            [
+              -96.3418519,
+              30.612317
+            ],
+            [
+              -96.3416884,
+              30.6121391
+            ],
+            [
+              -96.3418582,
+              30.6120234
+            ],
+            [
+              -96.3417933,
+              30.6119513
+            ],
+            [
+              -96.3419088,
+              30.6118743
+            ],
+            [
+              -96.3421306,
+              30.6121207
+            ],
+            [
+              -96.3421729,
+              30.6120928
+            ],
+            [
+              -96.3422384,
+              30.6121665
+            ],
+            [
+              -96.3419505,
+              30.6123562
+            ],
+            [
+              -96.3418916,
+              30.61229
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://www.openstreetmap.org/way/155052775",
+      "coordinate_source": "https://www.openstreetmap.org/way/155052775",
+      "access": "OSM-listed green space; access not independently verified",
+      "hours": "Opening hours not verified",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "osm-way-332217207",
+      "name": "Aggie Park",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.609531949999997,
+      "longitude": -96.33652612241127,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3375881,
+              30.6091024
+            ],
+            [
+              -96.3374777,
+              30.6089735
+            ],
+            [
+              -96.3373141,
+              30.6087848
+            ],
+            [
+              -96.3370005,
+              30.6084583
+            ],
+            [
+              -96.3368886,
+              30.6082923
+            ],
+            [
+              -96.3368522,
+              30.608209
+            ],
+            [
+              -96.3368203,
+              30.6081287
+            ],
+            [
+              -96.3368078,
+              30.6080847
+            ],
+            [
+              -96.3367839,
+              30.6080171
+            ],
+            [
+              -96.33671,
+              30.607927
+            ],
+            [
+              -96.3363209,
+              30.6075899
+            ],
+            [
+              -96.3354847,
+              30.6083461
+            ],
+            [
+              -96.3349158,
+              30.6087926
+            ],
+            [
+              -96.3346928,
+              30.6089767
+            ],
+            [
+              -96.3346803,
+              30.6090229
+            ],
+            [
+              -96.3346863,
+              30.609082
+            ],
+            [
+              -96.3347189,
+              30.6091421
+            ],
+            [
+              -96.3347727,
+              30.6092092
+            ],
+            [
+              -96.3361861,
+              30.6107537
+            ],
+            [
+              -96.3364249,
+              30.6110152
+            ],
+            [
+              -96.3366123,
+              30.6112206
+            ],
+            [
+              -96.3366759,
+              30.6112817
+            ],
+            [
+              -96.3367651,
+              30.6113401
+            ],
+            [
+              -96.3368378,
+              30.6113691
+            ],
+            [
+              -96.3369181,
+              30.6113907
+            ],
+            [
+              -96.3370589,
+              30.6114183
+            ],
+            [
+              -96.337207,
+              30.6114404
+            ],
+            [
+              -96.3373745,
+              30.6114804
+            ],
+            [
+              -96.3375099,
+              30.6115504
+            ],
+            [
+              -96.3375501,
+              30.611579
+            ],
+            [
+              -96.3375943,
+              30.6116158
+            ],
+            [
+              -96.3376216,
+              30.6116476
+            ],
+            [
+              -96.3376529,
+              30.6116836
+            ],
+            [
+              -96.3379041,
+              30.6119694
+            ],
+            [
+              -96.3380214,
+              30.6118943
+            ],
+            [
+              -96.3387494,
+              30.6113881
+            ],
+            [
+              -96.3388013,
+              30.6114468
+            ],
+            [
+              -96.3391518,
+              30.611192
+            ],
+            [
+              -96.3392351,
+              30.6111656
+            ],
+            [
+              -96.339226,
+              30.6109748
+            ],
+            [
+              -96.3392101,
+              30.610905
+            ],
+            [
+              -96.3391842,
+              30.610839
+            ],
+            [
+              -96.3391539,
+              30.6107895
+            ],
+            [
+              -96.3391221,
+              30.6107448
+            ],
+            [
+              -96.3390813,
+              30.6106963
+            ],
+            [
+              -96.3390418,
+              30.6106514
+            ],
+            [
+              -96.3382818,
+              30.6098547
+            ],
+            [
+              -96.3375881,
+              30.6091024
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://ucenter.tamu.edu/facilities/aggie-park/",
+      "coordinate_source": "https://www.openstreetmap.org/way/332217207",
+      "access": "Public park",
+      "hours": "24/7; temporary closures possible",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "osm-way-408027612",
+      "name": "Brison Park",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.6070006,
+      "longitude": -96.33221841581762,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3337589,
+              30.6078036
+            ],
+            [
+              -96.3337017,
+              30.6078773
+            ],
+            [
+              -96.3334303,
+              30.6081027
+            ],
+            [
+              -96.3329256,
+              30.6076478
+            ],
+            [
+              -96.3325227,
+              30.6075395
+            ],
+            [
+              -96.3317498,
+              30.6073645
+            ],
+            [
+              -96.3313648,
+              30.6071206
+            ],
+            [
+              -96.3311803,
+              30.6068806
+            ],
+            [
+              -96.3310379,
+              30.606773
+            ],
+            [
+              -96.3310147,
+              30.6065667
+            ],
+            [
+              -96.3310383,
+              30.6063777
+            ],
+            [
+              -96.3311178,
+              30.6062429
+            ],
+            [
+              -96.3312515,
+              30.6061553
+            ],
+            [
+              -96.3317047,
+              30.6060891
+            ],
+            [
+              -96.3319876,
+              30.6062053
+            ],
+            [
+              -96.3325066,
+              30.6065413
+            ],
+            [
+              -96.3326352,
+              30.6065905
+            ],
+            [
+              -96.3334494,
+              30.6072216
+            ],
+            [
+              -96.3338589,
+              30.6072872
+            ],
+            [
+              -96.3338113,
+              30.6077052
+            ],
+            [
+              -96.3337589,
+              30.6078036
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://www.openstreetmap.org/way/408027612",
+      "coordinate_source": "https://www.openstreetmap.org/way/408027612",
+      "access": "OSM-listed green space; access not independently verified",
+      "hours": "Opening hours not verified",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "osm-way-419264784",
+      "name": "Spence Park",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.61278935,
+      "longitude": -96.33814386219284,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3388402,
+              30.6131639
+            ],
+            [
+              -96.338782,
+              30.6130993
+            ],
+            [
+              -96.338813,
+              30.613078
+            ],
+            [
+              -96.3380225,
+              30.6122199
+            ],
+            [
+              -96.3379778,
+              30.6122479
+            ],
+            [
+              -96.3379423,
+              30.6122083
+            ],
+            [
+              -96.3379305,
+              30.6122058
+            ],
+            [
+              -96.337917,
+              30.6122088
+            ],
+            [
+              -96.3374814,
+              30.6125007
+            ],
+            [
+              -96.3383768,
+              30.6134977
+            ],
+            [
+              -96.3388402,
+              30.6131639
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://www.openstreetmap.org/way/419264784",
+      "coordinate_source": "https://www.openstreetmap.org/way/419264784",
+      "access": "OSM-listed green space; access not independently verified",
+      "hours": "Opening hours not verified",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "osm-way-381369081",
+      "name": "Research Park",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.6020606,
+      "longitude": -96.3610178547714,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3582414,
+              30.5997098
+            ],
+            [
+              -96.3589387,
+              30.5990541
+            ],
+            [
+              -96.3590675,
+              30.5988694
+            ],
+            [
+              -96.3590943,
+              30.5987171
+            ],
+            [
+              -96.359899,
+              30.5986155
+            ],
+            [
+              -96.3601994,
+              30.5990957
+            ],
+            [
+              -96.3609685,
+              30.5987253
+            ],
+            [
+              -96.3612647,
+              30.5991383
+            ],
+            [
+              -96.3616381,
+              30.5996787
+            ],
+            [
+              -96.3616466,
+              30.5997
+            ],
+            [
+              -96.361993,
+              30.6005632
+            ],
+            [
+              -96.3623109,
+              30.6018408
+            ],
+            [
+              -96.3625008,
+              30.60272
+            ],
+            [
+              -96.3625272,
+              30.6028424
+            ],
+            [
+              -96.362347,
+              30.6033604
+            ],
+            [
+              -96.3603645,
+              30.605247
+            ],
+            [
+              -96.3602599,
+              30.6052678
+            ],
+            [
+              -96.3601713,
+              30.6052239
+            ],
+            [
+              -96.3593586,
+              30.6045221
+            ],
+            [
+              -96.3591253,
+              30.6042797
+            ],
+            [
+              -96.3588785,
+              30.6039934
+            ],
+            [
+              -96.3586961,
+              30.6036517
+            ],
+            [
+              -96.358554,
+              30.6033447
+            ],
+            [
+              -96.3584306,
+              30.6030746
+            ],
+            [
+              -96.3583206,
+              30.6027929
+            ],
+            [
+              -96.3583045,
+              30.6026983
+            ],
+            [
+              -96.3583716,
+              30.6026244
+            ],
+            [
+              -96.3585352,
+              30.6025713
+            ],
+            [
+              -96.3586103,
+              30.6024905
+            ],
+            [
+              -96.3589027,
+              30.6028784
+            ],
+            [
+              -96.3596698,
+              30.6024928
+            ],
+            [
+              -96.3596885,
+              30.6022804
+            ],
+            [
+              -96.359643,
+              30.6013847
+            ],
+            [
+              -96.3596403,
+              30.6010707
+            ],
+            [
+              -96.3597288,
+              30.6005859
+            ],
+            [
+              -96.3599675,
+              30.6000503
+            ],
+            [
+              -96.3599219,
+              30.599891
+            ],
+            [
+              -96.3582414,
+              30.5997098
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://visit.cstx.gov/directory/research-park-disc-golf-course/",
+      "coordinate_source": "https://www.openstreetmap.org/way/381369081",
+      "access": "Public park",
+      "hours": "24/7; temporary closures possible",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "osm-way-419063502",
+      "name": "Leach Teaching Gardens",
+      "category": "park",
+      "area": "tamu",
+      "latitude": 30.6070852,
+      "longitude": -96.35160680391496,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -96.3516179,
+              30.6062566
+            ],
+            [
+              -96.3515836,
+              30.606334
+            ],
+            [
+              -96.3505486,
+              30.607039
+            ],
+            [
+              -96.3505174,
+              30.6070705
+            ],
+            [
+              -96.3505099,
+              30.6070999
+            ],
+            [
+              -96.350492,
+              30.6078563
+            ],
+            [
+              -96.3506529,
+              30.6078369
+            ],
+            [
+              -96.3507441,
+              30.6079339
+            ],
+            [
+              -96.3508634,
+              30.6079177
+            ],
+            [
+              -96.350964,
+              30.6079373
+            ],
+            [
+              -96.3511679,
+              30.6078981
+            ],
+            [
+              -96.3512448,
+              30.6079116
+            ],
+            [
+              -96.3514543,
+              30.6078103
+            ],
+            [
+              -96.3515784,
+              30.6078121
+            ],
+            [
+              -96.3517555,
+              30.607843
+            ],
+            [
+              -96.3518942,
+              30.6077941
+            ],
+            [
+              -96.3520154,
+              30.607905
+            ],
+            [
+              -96.352167,
+              30.6079973
+            ],
+            [
+              -96.3523352,
+              30.6080514
+            ],
+            [
+              -96.3524734,
+              30.6076761
+            ],
+            [
+              -96.352616,
+              30.6072911
+            ],
+            [
+              -96.3527915,
+              30.6068607
+            ],
+            [
+              -96.3528436,
+              30.6067548
+            ],
+            [
+              -96.3529911,
+              30.6065522
+            ],
+            [
+              -96.3530461,
+              30.6064547
+            ],
+            [
+              -96.3530908,
+              30.6063654
+            ],
+            [
+              -96.3531041,
+              30.6062976
+            ],
+            [
+              -96.3530628,
+              30.6062446
+            ],
+            [
+              -96.3530038,
+              30.6062059
+            ],
+            [
+              -96.3529086,
+              30.6061603
+            ],
+            [
+              -96.3527893,
+              30.6061367
+            ],
+            [
+              -96.3522957,
+              30.6061355
+            ],
+            [
+              -96.3521723,
+              30.606124
+            ],
+            [
+              -96.3519135,
+              30.6061251
+            ],
+            [
+              -96.3516179,
+              30.6062566
+            ]
+          ]
+        ]
+      },
+      "source_url": "https://gardens.tamu.edu/visit/admission-hours/",
+      "coordinate_source": "https://www.openstreetmap.org/way/419063502",
+      "access": "Public park",
+      "hours": "Dawn to dusk",
+      "designation": "Outdoor green space; cooling benefit is not assumed",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "indoor-249571643",
+      "name": "Sterling C. Evans Library",
+      "category": "indoor_refuge",
+      "area": "tamu",
+      "latitude": 30.61679699202594,
+      "longitude": -96.3392694078309,
+      "source_url": "https://askus.library.tamu.edu/faq/50898",
+      "coordinate_source": "https://www.openstreetmap.org/way/249571643",
+      "hours_url": "https://tamu.libcal.com/hours/",
+      "access": "Library buildings open to the public; confirm entry and current hours",
+      "hours": "Date-specific library hours; check official calendar",
+      "designation": "Campus indoor refuge candidate; not an officially designated cooling center",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "indoor-249571645",
+      "name": "Cushing Memorial Library",
+      "category": "indoor_refuge",
+      "area": "tamu",
+      "latitude": 30.616337750139156,
+      "longitude": -96.33994865469462,
+      "source_url": "https://askus.library.tamu.edu/faq/50898",
+      "coordinate_source": "https://www.openstreetmap.org/way/249571645",
+      "hours_url": "https://tamu.libcal.com/hours/",
+      "access": "Library buildings open to the public; confirm entry and current hours",
+      "hours": "Date-specific library hours; check official calendar",
+      "designation": "Campus indoor refuge candidate; not an officially designated cooling center",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "indoor-155052747",
+      "name": "West Campus Library",
+      "category": "indoor_refuge",
+      "area": "tamu",
+      "latitude": 30.611549076958777,
+      "longitude": -96.35019196077532,
+      "source_url": "https://askus.library.tamu.edu/faq/50898",
+      "coordinate_source": "https://www.openstreetmap.org/way/155052747",
+      "hours_url": "https://tamu.libcal.com/hours/",
+      "access": "Library buildings open to the public; confirm entry and current hours",
+      "hours": "Date-specific library hours; check official calendar",
+      "designation": "Campus indoor refuge candidate; not an officially designated cooling center",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "indoor-307098419",
+      "name": "Sterling C. Evans Library Annex",
+      "category": "indoor_refuge",
+      "area": "tamu",
+      "latitude": 30.616287230993606,
+      "longitude": -96.33836816641585,
+      "source_url": "https://askus.library.tamu.edu/faq/50898",
+      "coordinate_source": "https://www.openstreetmap.org/way/307098419",
+      "hours_url": "https://tamu.libcal.com/hours/",
+      "access": "Library buildings open to the public; confirm entry and current hours",
+      "hours": "Date-specific library hours; check official calendar",
+      "designation": "Campus indoor refuge candidate; not an officially designated cooling center",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "rellis-library",
+      "name": "RELLIS Library / Learning Resource Center (ACB2, Room 111)",
+      "category": "indoor_refuge",
+      "area": "rellis",
+      "latitude": 30.640918640201225,
+      "longitude": -96.46724381335684,
+      "source_url": "https://www.blinn.edu/library/info/hours/rellis.htm",
+      "coordinate_source": "https://www.openstreetmap.org/way/1214015182",
+      "hours_url": "https://www.blinn.edu/library/info/hours/rellis.htm",
+      "access": "Campus users; general visitor access not verified",
+      "hours": "Semester and holiday schedule; check official calendar",
+      "designation": "Campus indoor refuge candidate; not an officially designated cooling center",
+      "verified_on": "2026-11-08"
+    },
+    {
+      "id": "city-cooling-1",
+      "name": "Larry J. Ringer Library",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5900696,
+      "longitude": -96.3145078,
+      "address": "1818 Harvey Mitchell Pkwy. S.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/GWRkZQqRT6q7VUHbA",
+      "hours": "Mon-Thu 09:00-20:00; Fri-Sat 09:00-17:00; Sun 13:30-17:30",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            540,
+            1200
+          ]
+        ],
+        "1": [
+          [
+            540,
+            1200
+          ]
+        ],
+        "2": [
+          [
+            540,
+            1200
+          ]
+        ],
+        "3": [
+          [
+            540,
+            1200
+          ]
+        ],
+        "4": [
+          [
+            540,
+            1020
+          ]
+        ],
+        "5": [
+          [
+            540,
+            1020
+          ]
+        ],
+        "6": [
+          [
+            810,
+            1050
+          ]
+        ]
+      }
+    },
+    {
+      "id": "city-cooling-2",
+      "name": "College Station Visitor Center",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.6203653,
+      "longitude": -96.3249328,
+      "address": "1207 Texas Ave. S.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/jTPuPimGFrmRGVoZ7",
+      "hours": "Mon-Fri 08:00-17:00; Sat 10:00-14:00; Sun closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "5": [
+          [
+            600,
+            840
+          ]
+        ],
+        "6": []
+      }
+    },
+    {
+      "id": "city-cooling-3",
+      "name": "Gary Halter Nature Center",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5680729,
+      "longitude": -96.2112665,
+      "address": "3555 Rock Prairie Road W.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/YPfETgoBv1ygiC9cA",
+      "hours": "Mon-Sat 08:00-17:00; Sun closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "5": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "6": []
+      }
+    },
+    {
+      "id": "city-cooling-4",
+      "name": "Fire Station 3 Community Room",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5647301,
+      "longitude": -96.2829507,
+      "address": "1900 Barron Road",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/bQUf4i5Nci4TNoRG7",
+      "hours": "Daily 08:00-18:00",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "5": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "6": [
+          [
+            480,
+            1080
+          ]
+        ]
+      }
+    },
+    {
+      "id": "city-cooling-5",
+      "name": "Fire Station 5 Community Room",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5676858,
+      "longitude": -96.2494181,
+      "address": "1601 William D. Fitch Pkwy.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/5hzUCj4ywDNEdUKbA",
+      "hours": "Daily 08:00-18:00",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "5": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "6": [
+          [
+            480,
+            1080
+          ]
+        ]
+      }
+    },
+    {
+      "id": "city-cooling-6",
+      "name": "Fire Station 6 Community Room",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.6325029,
+      "longitude": -96.3292158,
+      "address": "610 University Drive East",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/vzeaRbf5C36qaXYF8",
+      "hours": "Daily 08:00-18:00",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "5": [
+          [
+            480,
+            1080
+          ]
+        ],
+        "6": [
+          [
+            480,
+            1080
+          ]
+        ]
+      }
+    },
+    {
+      "id": "city-cooling-7",
+      "name": "Lincoln Recreation Center",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5989114,
+      "longitude": -96.3310074,
+      "address": "1000 Eleanor St.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/CoLnEhZwAPxDwrT9A",
+      "hours": "Mon-Fri 09:00-18:00; weekends closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            540,
+            1080
+          ]
+        ],
+        "1": [
+          [
+            540,
+            1080
+          ]
+        ],
+        "2": [
+          [
+            540,
+            1080
+          ]
+        ],
+        "3": [
+          [
+            540,
+            1080
+          ]
+        ],
+        "4": [
+          [
+            540,
+            1080
+          ]
+        ],
+        "5": [],
+        "6": []
+      }
+    },
+    {
+      "id": "city-cooling-8",
+      "name": "Meyer Senior and Community Center",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.6151293,
+      "longitude": -96.3054542,
+      "address": "2275 Dartmouth St.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/urmAEcaERdkHQA7T6",
+      "hours": "Mon-Fri 08:00-17:00; weekends closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "5": [],
+        "6": []
+      }
+    },
+    {
+      "id": "city-cooling-9",
+      "name": "Southwood Community Center",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.5810599,
+      "longitude": -96.2937411,
+      "address": "1520 Rock Prairie Road",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/h6Uig53GFWszyJvWA",
+      "hours": "Mon-Fri 08:00-17:00; weekends closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "5": [],
+        "6": []
+      }
+    },
+    {
+      "id": "city-cooling-10",
+      "name": "College Station City Hall",
+      "category": "cooling_center",
+      "area": "regional",
+      "latitude": 30.621013,
+      "longitude": -96.3253242,
+      "address": "1101 Texas Ave. S.",
+      "source_url": "https://www.cstx.gov/news/posts/city-s-public-facilities-available-for-cooling-off-from-extreme-heat/",
+      "coordinate_source": "https://maps.app.goo.gl/oHhzbJBABXHUk3Pi6",
+      "hours": "Mon-Fri 08:00-17:00; weekends closed",
+      "access": "Public during listed normal business hours; verify closures",
+      "designation": "City-listed air-conditioned public cooling facility (22 July 2026 notice)",
+      "verified_on": "2026-11-08",
+      "weekly_hours": {
+        "0": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "1": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "2": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "3": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "4": [
+          [
+            480,
+            1020
+          ]
+        ],
+        "5": [],
+        "6": []
+      }
+    }
+  ]
+}
