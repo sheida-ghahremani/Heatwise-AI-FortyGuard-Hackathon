@@ -703,7 +703,7 @@ with tab_compare:
 with tab_chat:
     st.subheader("Ask HeatWise AI")
     if os.getenv("GROQ_API_KEY"):
-        st.info("Online AI configured: Groq · GPT-OSS 20B. Each reply reports the mode actually used.")
+        st.info("Online AI configured: Groq. Each reply reports the model and mode actually used.")
     elif os.getenv("OPENAI_API_KEY"):
         st.info("OpenAI is configured. If billing is inactive, HeatWise automatically uses its local fallback.")
     else:
