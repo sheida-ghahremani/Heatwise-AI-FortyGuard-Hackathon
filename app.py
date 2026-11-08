@@ -412,7 +412,7 @@ with st.sidebar:
             cloud_cover = weather_snapshot.cloud_cover_pct
             precipitation = weather_snapshot.precipitation_mm
             weather_cols = st.columns(2)
-            weather_cols[0].metric("Live humidity", f"{humidity:.0f}%")
+            weather_cols[0].metric("Relative humidity", f"{humidity:.0f}%")
             weather_cols[1].metric("Wind at 10 m", f"{wind:.1f} m/s")
             condition_cols = st.columns(3)
             condition_cols[0].metric("Radiation", f"{radiation:.0f} W/m²")
@@ -454,7 +454,7 @@ if origin_name == destination_name:
 profile = UserProfile(AgeGroup(age), Activity(activity), Clothing(clothing))
 if data_source == "FortyGuard College Station data":
     try:
-        with st.spinner("Loading the current FortyGuard temperature layer..."):
+        with st.spinner("Loading the selected FortyGuard temperature layer..."):
             snapshot = fetch_hourly_snapshot(requested_at, force=force_refresh, area=area_config["key"])
     except Exception as error:
         snapshot = latest_cached_snapshot(area_config["key"])
@@ -528,7 +528,7 @@ if data_source == "FortyGuard College Station data":
         )
     else:
         wind_description = f"10 m wind {wind:.1f} m/s"
-    st.markdown(f'<div class="notice"><b>Real-time mode:</b> {snapshot.label}. FortyGuard temperature grid + OpenStreetMap walk network + {shade_description}.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="notice"><b>Historical case study:</b> {snapshot.label.replace("Live API", "Retrieved from API")}. FortyGuard temperature grid + OpenStreetMap walk network + {shade_description}.</div>', unsafe_allow_html=True)
     st.caption(f"Area mean from this FortyGuard layer: {temperature:.1f} °C. Updated {snapshot.fetched_at.strftime('%b %d at %-I:%M %p %Z')}.")
     st.caption(
         f"Weather at {requested_at.strftime('%-I:%M %p')}: relative humidity {humidity:.0f}% · "
@@ -622,6 +622,9 @@ with tab_map:
     )
     profile_frame = pd.DataFrame(route_temperature_profile(graph, selected))
     if not profile_frame.empty:
+        st.download_button("Download route temperature profile (CSV)",
+                           profile_frame.assign(environmental_time=requested_at.isoformat() if data_source == "FortyGuard College Station data" else "simulated").to_csv(index=False).encode("utf-8"),
+                           file_name="heatwise_temperature_profile.csv", mime="text/csv", on_click="ignore")
         st.subheader("Temperature along the selected route")
         st.line_chart(
             profile_frame.set_index("distance_km")[["temperature_c"]],
@@ -674,6 +677,18 @@ with tab_3d:
     else:
         st.info("Turn on the 3D scene when you want to inspect LiDAR buildings, canopy, heat, and shade.")
 with tab_compare:
+    from dataclasses import asdict
+    comparison_rows = []
+    for route in routes:
+        row = {key: value for key, value in asdict(route).items() if key != "nodes"}
+        row.update({"study_area": study_area, "origin": origin_name, "destination": destination_name,
+                    "age_group": age, "activity": activity, "clothing": clothing,
+                    "environmental_time": requested_at.isoformat() if data_source == "FortyGuard College Station data" else "simulated",
+                    "data_source": data_source})
+        comparison_rows.append(row)
+    st.download_button("Download route comparison (CSV)",
+                       pd.DataFrame(comparison_rows).to_csv(index=False).encode("utf-8"),
+                       file_name="heatwise_route_comparison.csv", mime="text/csv", on_click="ignore")
     for route in routes:
         st.markdown(f"### <span style='color:{ROUTE_COLORS[route.name]}'>{route.name}</span>", unsafe_allow_html=True)
         c1, c2, c3, c4, c5, c6, c7 = st.columns(7)
