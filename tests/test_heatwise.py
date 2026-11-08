@@ -1,5 +1,6 @@
 import networkx as nx
 import pickle
+import json
 from datetime import datetime, timezone
 from unittest.mock import patch
 
@@ -41,13 +42,16 @@ def test_demo_routes_are_connected_and_summarized():
     assert all(nx.is_path(graph, r.nodes) for r in routes)
 
 
-def test_cached_fortyguard_heatmap_loader():
-    frame = load_fortyguard_heatmap(
-        "data/heatmaps/heatmap_parcel_diridon_san_jose_2024-07-15_tcm.json"
-    )
-    assert len(frame) > 0
+def test_cached_fortyguard_heatmap_loader(tmp_path):
+    path = tmp_path / "hour.json"
+    path.write_text(json.dumps({"result": {"map_data": {"type": "FeatureCollection", "features": [
+        {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-96.34,30.61],[-96.339,30.61],[-96.339,30.611],[-96.34,30.611],[-96.34,30.61]]]},
+         "properties": {"average_temperature": 35.5}}
+    ]}}}))
+    frame = load_fortyguard_heatmap(path)
+    assert len(frame) == 1
     assert frame.crs.to_epsg() == 4326
-    assert frame["average_temperature"].notna().all()
+    assert frame["average_temperature"].iloc[0] == 35.5
 
 
 def test_local_assistant_answers_without_openai_key():
