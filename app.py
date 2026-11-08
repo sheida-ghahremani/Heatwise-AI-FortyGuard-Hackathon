@@ -577,7 +577,7 @@ with tab_map:
     selected = next(r for r in routes if r.name == selected_name)
     st.markdown(
         f'<div class="personal-risk"><b>Personal Heat Risk (PET): {selected.pet_category}</b><br>'
-        f'Activity-sensitive PET-equivalent temperature: {selected.average_pet_c:.1f} °C for {age}, '
+        f'Profile-sensitive mean segment PET: {selected.average_pet_c:.1f} °C for {age}, '
         f'{activity.lower()} and {clothing.lower()}. UTCI is reported separately as environmental heat stress; '
         f'route duration is included in the exposure-load metric below.</div>',
         unsafe_allow_html=True,
@@ -591,13 +591,13 @@ with tab_map:
     second_metrics = st.columns(4)
     second_metrics[0].metric("Mean UTCI equivalent", f"{selected.average_utci_c:.1f} °C")
     second_metrics[1].metric("UTCI category", selected.risk)
-    second_metrics[2].metric("Activity PET equivalent", f"{selected.average_pet_c:.1f} °C")
+    second_metrics[2].metric("Personalized PET equivalent", f"{selected.average_pet_c:.1f} °C")
     second_metrics[3].metric("Personal heat risk", selected.pet_category)
     st.caption(
         f"Route-average mean radiant temperature (SolarCal estimate): {selected.average_mrt_c:.1f} °C · "
         f"clothing insulation: {profile.summer_clothing_clo:.1f} clo · "
         f"UTCI exposure load: {selected.utci_exposure_load:.1f} °C·min above 26 °C · "
-        f"activity-sensitive PET load: {selected.pet_exposure_load:.1f} °C·min above 29 °C "
+        f"personalized segment PET load: {selected.pet_exposure_load:.1f} °C·min above 29 °C "
         f"({selected.pet_category})."
     )
     st.caption(
@@ -641,7 +641,7 @@ with tab_map:
     if selected.name == "Lowest Heat Risk":
         difference = selected.duration_min - fastest.duration_min
         reduction = 100 * (fastest.heat_score - selected.heat_score) / max(fastest.heat_score, 1)
-        st.success(f"This route reduces modeled heat exposure by {reduction:.0f}% for about {difference:.1f} additional minutes.")
+        st.success(f"This route reduces modeled personalized PET exposure by {reduction:.0f}% for about {difference:.1f} additional minutes.")
 
 with tab_3d:
     st.subheader("3D Urban Heat Explorer")
@@ -698,17 +698,22 @@ with tab_compare:
         c4.metric("Estimated shade", f"{route.shade_pct:.0f}%")
         c5.metric("Mean UTCI equivalent", f"{route.average_utci_c:.1f} °C")
         c6.metric("UTCI category", route.risk)
-        c7.metric("Activity PET equivalent", f"{route.average_pet_c:.1f} °C")
+        c7.metric("Personalized PET equivalent", f"{route.average_pet_c:.1f} °C")
 
 with tab_chat:
     st.subheader("Ask HeatWise AI")
     if os.getenv("GROQ_API_KEY"):
-        st.success("Conversational AI is active: Groq · GPT-OSS 20B")
+        st.info("Online AI configured: Groq · GPT-OSS 20B. Each reply reports the mode actually used.")
     elif os.getenv("OPENAI_API_KEY"):
         st.info("OpenAI is configured. If billing is inactive, HeatWise automatically uses its local fallback.")
     else:
         st.info("Local assistant mode is active. Add GROQ_API_KEY to .env for full conversational AI.")
     st.caption("Ask about route tradeoffs, shade, exposure, age, activity, or departure conditions. Not medical advice.")
+    chat_context = (study_area, origin_name, destination_name, requested_at.isoformat(), age, activity, clothing,
+                    tuple((r.name, tuple(r.nodes), round(r.pet_exposure_load, 6)) for r in routes))
+    if st.session_state.get("heatwise_chat_context") != chat_context:
+        st.session_state.pop("heatwise_messages", None)
+        st.session_state.heatwise_chat_context = chat_context
     if "heatwise_messages" not in st.session_state:
         st.session_state.heatwise_messages = [
             {"role": "assistant", "content": "Hi! Ask me which route best matches your current age and activity profile."}
@@ -716,6 +721,8 @@ with tab_chat:
     for message in st.session_state.heatwise_messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+            if message.get("mode"):
+                st.caption(f"Mode: {message['mode']}")
     if prompt := st.chat_input("Why is the lowest-risk route better for me?"):
         st.session_state.heatwise_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -728,21 +735,21 @@ with tab_chat:
                         weather.humidity_pct, weather.wind_mps,
                     )
                 except Exception as error:
-                    reply = f"The online assistant is temporarily unavailable. Please check the OpenAI API key and billing. ({type(error).__name__})"
+                    reply = f"The online assistant is temporarily unavailable. Please retry. ({type(error).__name__})"
                     assistant_mode = "Error fallback"
                 st.markdown(reply)
                 st.caption(f"Mode: {assistant_mode}")
-        st.session_state.heatwise_messages.append({"role": "assistant", "content": reply})
+        st.session_state.heatwise_messages.append({"role": "assistant", "content": reply, "mode": assistant_mode})
 
 with tab_method:
     st.subheader("Standards-based outdoor thermal stress")
     st.write(
         "Each network segment uses ASHRAE 55 SolarCal to estimate mean radiant temperature and "
-        "ISO 14505-2 UTCI to combine air temperature, mean radiant temperature, relative humidity, "
+        "UTCI to combine air temperature, mean radiant temperature, relative humidity, "
         "and 10 m wind. UTCI remains the activity-independent environmental index. The MEMI steady-state "
-        "PET model adds age, activity MET and summer clothing for activity-sensitive routing."
+        "PET model adds age, activity MET and clothing to every segment. Lowest Heat Risk minimizes accumulated segment PET excess above 29 °C; Balanced combines minutes with 0.04 times this PET load."
     )
-    st.code("UTCI load = Σ[max(0, UTCI − 26) × duration]\nActivity PET load = Σ[max(0, PET − 29) × duration]")
+    st.code("UTCI load = Σ[max(0, UTCI − 26) × duration]\nPersonalized PET load = Σ[max(0, segment PET − 29) × duration]")
     st.info(
         "Walking, cycling and jogging use 3.3, 6.8 and 7.0 MET respectively (2024 Adult Compendium). "
         "Cycling uses an OSM bicycle network; walking and jogging use the pedestrian network. Age is not "
@@ -750,18 +757,17 @@ with tab_method:
     )
     st.markdown(
         "**Scientific references:** [UTCI operational model](https://doi.org/10.1007/s00484-011-0454-1) · "
-        "[ISO 14505-2 UTCI](https://www.iso.org/standard/79771.html) · "
         "[PET/MEMI implementation](https://pythermalcomfort.readthedocs.io/) · "
         "[2024 Compendium of Physical Activities](https://pacompendium.com/) · "
         "[ASHRAE 55 thermal-environment standard](https://www.ashrae.org/technical-resources/bookstore/standard-55-thermal-environmental-conditions-for-human-occupancy)."
     )
     st.caption(
-        "Current limitation: SolarCal supplies an engineering MRT estimate with air temperature as the long-wave "
-        "baseline. Full urban-radiation validation would require measured/modelled long-wave fluxes, sky-view factor, "
-        "surface albedo and a model such as SOLWEIG."
+        "MRT combines SolarCal short-wave gains with a sky/surface long-wave estimate. It is a modeled value. "
+        "Segment PET uses cache bins of 0.1 °C air temperature, 0.25 °C MRT and 0.05 m/s wind; "
+        "age, metabolism and clothing remain explicit model inputs. Geographic coverage is TAMU and RELLIS."
     )
     st.markdown(
-        "**Live-data design:** FortyGuard temperature grid + weather-station humidity/wind + "
-        "time-dependent LiDAR tree/building shade + Open-Meteo hourly humidity and 10 m wind + "
+        "**Synchronized inputs:** FortyGuard temperature grid + Open-Meteo hourly weather "
+        "(historical reanalysis for archive dates) + time-dependent LiDAR tree/building shade + "
         "OSM walking/cycling network."
     )
