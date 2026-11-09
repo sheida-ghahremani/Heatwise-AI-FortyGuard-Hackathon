@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from dataclasses import asdict
 
@@ -99,8 +100,21 @@ def build_relief_map(items, graph=None, routes=None, origin=None, destination=No
     from html import escape
     from .routing import route_coordinates
     from .map_view import ROUTE_COLORS
-    center=([sum(p['latitude'] for p in items)/len(items),sum(p['longitude'] for p in items)/len(items)] if items else [float(graph.nodes[origin]['y']),float(graph.nodes[origin]['x'])] if graph is not None and origin is not None else [30.614,-96.35])
-    m=folium.Map(location=center,zoom_start=15,tiles='OpenStreetMap',control_scale=True)
+    points=[(p['latitude'],p['longitude']) for p in items]
+    if graph is not None:
+        points += [(float(graph.nodes[n]['y']),float(graph.nodes[n]['x'])) for n in (origin,destination) if n is not None]
+        if routes:
+            for route in routes:points.extend(route_coordinates(graph,route))
+    if not points:points=[(30.614,-96.35)]
+    south,north=min(p[0] for p in points),max(p[0] for p in points)
+    west,east=min(p[1] for p in points),max(p[1] for p in points)
+    center=[(south+north)/2,(west+east)/2]
+    cos_lat=math.cos(math.radians(center[0]))
+    span=max(north-south,(east-west)*cos_lat*430/800,.0001)
+    zoom=max(3,min(16,int(math.floor(math.log2(156543.03392*cos_lat*430*.8/(111320*span))))))
+    # Avoid Leaflet fitBounds while Streamlit initializes an inactive tab at
+    # zero width: that otherwise leaves the catalog map at world zoom.
+    m=folium.Map(location=center,zoom_start=zoom,tiles='OpenStreetMap',control_scale=True)
     colors={'cooling_center':'#2563eb','indoor_refuge':'#7c3aed','park':'#168264'}
     for cat,label in CATEGORY_LABELS.items():
         layer=folium.FeatureGroup(name=label)
@@ -120,5 +134,5 @@ def build_relief_map(items, graph=None, routes=None, origin=None, destination=No
         for n,label in [(origin,'Origin'),(destination,'Destination')]:
             if n is not None:folium.Marker([graph.nodes[n]['y'],graph.nodes[n]['x']],tooltip=label).add_to(m)
     folium.LayerControl().add_to(m)
-    if items:m.fit_bounds([[min(p['latitude'] for p in items),min(p['longitude'] for p in items)],[max(p['latitude'] for p in items),max(p['longitude'] for p in items)]],max_zoom=16)
+
     return m
