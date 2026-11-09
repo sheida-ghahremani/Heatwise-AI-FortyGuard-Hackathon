@@ -70,7 +70,6 @@ def render_relief_tab(graph,routes,profile,area,origin,destination,context):
         st.download_button('Download stop-route comparison (CSV)',result.to_csv(index=False).encode(),file_name='heatwise_relief_stop_comparison.csv',mime='text/csv',on_click='ignore')
 
 
-@st.fragment
 def render_planner_tab(graph,profile,area,context,environment):
     st.subheader('Campus heat planning dashboard')
     st.write('Screen the modeled network for hot segments, limited shade and distance to listed campus indoor sites. Select thresholds, inspect priority cells and export the results.')
