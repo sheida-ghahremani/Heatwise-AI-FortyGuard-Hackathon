@@ -343,19 +343,21 @@ with st.sidebar:
             LIVE_GRAPH = area_config["graph"]
         pass
     if data_source == "FortyGuard College Station data":
-        selected_date = st.date_input(
-            "Temperature date (College Station)",
-            value=date(2026, 8, 1),
-            min_value=date(2019, 1, 1),
-            max_value=current_hour().date(),
-        )
-        selected_time = st.time_input(
-            "Temperature hour (College Station)",
-            value=datetime_time(14, 0),
-            step=3600,
-        )
-        requested_at = datetime.combine(selected_date, selected_time, tzinfo=COLLEGE_STATION_TZ)
-        st.caption("Historical case study · Aug 1, 2026 at 2 PM. FortyGuard data can lag by 1–2 weeks; all environmental inputs use the selected date and hour.")
+        time_mode = st.radio("Temperature time", ["Current hour", "Choose date and hour"])
+        if time_mode == "Current hour":
+            requested_at = current_hour()
+            st.caption(f"Current College Station hour: {requested_at:%b %d, %Y %H:00 %Z}. Recalculate to request the latest hour.")
+        else:
+            selected_date = st.date_input(
+                "Temperature date (College Station)",
+                value=date(2026, 8, 1), min_value=date(2019, 1, 1),
+                max_value=current_hour().date(),
+            )
+            selected_time = st.time_input(
+                "Temperature hour (College Station)", value=datetime_time(14, 0), step=3600,
+            )
+            requested_at = datetime.combine(selected_date, selected_time, tzinfo=COLLEGE_STATION_TZ)
+        st.caption("FortyGuard is requested for this local hour. UTCI/PET use synchronized hourly weather and modeled shade. Data availability depends on the API.")
     pending_request = {
         "data_source": data_source,
         "study_area": study_area,
@@ -528,7 +530,7 @@ if data_source == "FortyGuard College Station data":
         )
     else:
         wind_description = f"10 m wind {wind:.1f} m/s"
-    st.markdown(f'<div class="notice"><b>Historical case study:</b> {snapshot.label.replace("Live API", "Retrieved from API")}. FortyGuard temperature grid + OpenStreetMap walk network + {shade_description}.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="notice"><b>Selected-hour data:</b> {snapshot.label.replace("Live API", "Retrieved from API")}. FortyGuard temperature grid + OpenStreetMap walk network + {shade_description}.</div>', unsafe_allow_html=True)
     st.caption(f"Area mean from this FortyGuard layer: {temperature:.1f} °C. Updated {snapshot.fetched_at.strftime('%b %d at %-I:%M %p %Z')}.")
     st.caption(
         f"Weather at {requested_at.strftime('%-I:%M %p')}: relative humidity {humidity:.0f}% · "
@@ -569,8 +571,8 @@ origin = nearest_node(graph, origin_coordinate)
 destination = nearest_node(graph, destination_coordinate)
 routes = calculate_routes(graph, origin, destination, profile)
 
-tab_map, tab_3d, tab_compare, tab_relief, tab_planner, tab_chat, tab_method = st.tabs(
-    ["Route map", "3D Urban Heat", "Compare routes", "Cooling & parks", "Planner dashboard", "Ask HeatWise AI", "How it works"]
+tab_map, tab_3d, tab_compare, tab_relief, tab_planner, tab_chat, tab_method, tab_utci = st.tabs(
+    ["Route map", "3D Urban Heat", "Compare routes", "Cooling & parks", "Planner dashboard", "Ask HeatWise AI", "How it works", "UTCI route maps"]
 )
 with tab_map:
     selected_name = st.radio("Show route", [r.name for r in routes], horizontal=True)
@@ -779,7 +781,7 @@ with tab_method:
     )
 
 
-# Each new tool reruns independently of the full-campus thermal calculation.
+# Cooling and parks reruns independently of the full-campus thermal calculation.
 from heatwise.relief_ui import render_relief_tab, render_planner_tab
 import hashlib
 environment_revision = hashlib.sha256(repr((
@@ -800,3 +802,8 @@ with tab_relief:
     render_relief_tab(graph, routes, profile, area_config["key"], origin, destination, analysis_context)
 with tab_planner:
     render_planner_tab(graph, profile, area_config["key"], analysis_context, analysis_environment)
+
+
+with tab_utci:
+    from heatwise.utci_view import render_utci_tab
+    render_utci_tab(graph, routes)
