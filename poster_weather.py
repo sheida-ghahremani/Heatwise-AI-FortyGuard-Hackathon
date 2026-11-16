@@ -73,7 +73,7 @@ def _fetch_nws_weather(selected: datetime, latitude: float, longitude: float, ca
     """Exact-hour US National Weather Service fallback for shared-host rate limits."""
     point = requests.get(
         f"https://api.weather.gov/points/{latitude:.4f},{longitude:.4f}",
-        headers=NWS_HEADERS, timeout=20,
+        headers=NWS_HEADERS, timeout=(5, 12),
     )
     point.raise_for_status()
     point_props = point.json()["properties"]
@@ -148,11 +148,12 @@ def fetch_hourly_weather(
         source = "Open-Meteo hourly cache"
     else:
         retry = Retry(
-            total=3,
-            connect=3,
-            read=3,
-            status=3,
+            total=1,
+            connect=1,
+            read=1,
+            status=1,
             backoff_factor=0.7,
+            respect_retry_after_header=False,
             status_forcelist=(429, 500, 502, 503, 504),
             allowed_methods=frozenset({"GET"}),
         )
@@ -173,7 +174,7 @@ def fetch_hourly_weather(
                     "start_date": selected.date().isoformat(),
                     "end_date": selected.date().isoformat(),
                 },
-                timeout=20,
+                timeout=(5, 12),
             )
             response.raise_for_status()
             payload = response.json()
