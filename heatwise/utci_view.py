@@ -10,8 +10,10 @@ def build_utci_route_map(graph, route, minimum, maximum):
     scale = LinearColormap(
         ["#195ab6", "#278f9a", "#e3a316", "#c84024", "#8a183b"],
         vmin=minimum, vmax=maximum,
-        caption="Modeled segment UTCI (°C)",
+        caption="UTCI (°C)",
     )
+    scale.width = 220
+    scale.height = 50
     for u, v in zip(route.nodes, route.nodes[1:]):
         edge = _edge_for_weight(graph, u, v, route.routing_weight)
         geometry = edge.get("geometry")
